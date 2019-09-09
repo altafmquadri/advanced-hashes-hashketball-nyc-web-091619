@@ -5,7 +5,7 @@ def game_hash
     home: 
     {
       team_name: "Brooklyn Nets",
-      colors: ["Black, White"],
+      colors: ["Black", "White"],
       players: [
         "Alan Anderson":
           {
@@ -70,8 +70,8 @@ def game_hash
     },
     away: 
     {
-      team_name: "Charlotte Hornets"
-      colors: ["Turquiose", "Purple"]
+      team_name: "Charlotte Hornets",
+      colors: ["Turquiose", "Purple"],
       players: [
         "Jeff Adrien":
           {
@@ -135,7 +135,7 @@ def game_hash
       ]
     }
   }
-  binding.pry
+  #binding.pry
   game_hash
 end
 
