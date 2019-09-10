@@ -228,7 +228,7 @@ def winning_team
     if location == :home
       team_data[:players].each do |player, stats|
         stats.each {|key, value| value.class == String ? stats[key] = value.to_i : false}
-          stats
+          stats[:points].reduce(0) { |total, num| total + num }
         binding.pry
     end
     end
