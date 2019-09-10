@@ -235,16 +235,31 @@ def winning_team
   home_team > away_team ? game_hash[:home][:team_name] : game_hash[:away][:team_name]
 end
 
+def player_with_longest_name
+  longest_name = ""
+  game_hash.each do |location, team_data|
+    team_data[:players].each do |player, stats|
+      longest_name.length > player.length ? longest_name : longest_name = player
+    end
+  end
+  longest_name
+end
 
-
-
-
-
-
-
-
-
-
+def long_name_steals_a_ton?
+  name = player_with_longest_name
+  
+  max_steals = 0
+  player_most_steals = ""
+  game_hash.each do |location, team_data|
+    team_data[:players].each do |player, stats|
+      stats.each do |key, value|
+        stats[:steals].to_i > max_steals ? (max_steals = stats[:steals].to_i; player_most_steals = player) : false
+      end
+    end
+  end
+  
+  player_most_steals == name 
+end
 
 def good_practices
   game_hash.each do |location, team_data|
