@@ -225,6 +225,13 @@ end
 
 def winning_team
   game_hash.each do |location, team_data|
+    if location == :home
+      team_data[:players].each do |player, stats|
+        stats.each {|key, value| value.class == String ? stats[key] = value.to_i : false}
+          stats
+        binding.pry
+    end
+    end
   end
 end
 
