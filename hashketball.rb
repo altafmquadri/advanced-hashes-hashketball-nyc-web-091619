@@ -6,8 +6,8 @@ def game_hash
     {
       team_name: "Brooklyn Nets",
       colors: ["Black", "White"],
-      players: [
-        "Alan Anderson":
+      players: {
+        "Alan Anderson" =>
           {
             number: "0",
             shoe: "16",
@@ -19,7 +19,7 @@ def game_hash
             slam_dunks: "1"
           },
         
-        "Reggie Evans":
+        "Reggie Evans"=>
           {
             number: "30",
             shoe: "14",
@@ -31,7 +31,7 @@ def game_hash
             slam_dunks: "7"
           },
           
-          "Brook Lopez":
+          "Brook Lopez"=>
           {
             number: "11",
             shoe: "17",
@@ -43,7 +43,7 @@ def game_hash
             slam_dunks: "15"
           },
           
-          "Mason Plumlee":
+          "Mason Plumlee"=>
           {
             number: "1",
             shoe: "19",
@@ -55,7 +55,7 @@ def game_hash
             slam_dunks: "5"
           },
           
-          "Jason Terry":
+          "Jason Terry"=>
           {
             number: "31",
             shoe: "15",
@@ -66,14 +66,14 @@ def game_hash
             blocks: "11",
             slam_dunks: "1"
           }
-      ]
+      }
     },
     away: 
     {
       team_name: "Charlotte Hornets",
-      colors: ["Turquiose", "Purple"],
-      players: [
-        "Jeff Adrien":
+      colors: ["Turquoise", "Purple"],
+      players: {
+        "Jeff Adrien"=>
           {
             number: "4",
             shoe: "18",
@@ -85,7 +85,7 @@ def game_hash
             slam_dunks: "2"
           },
           
-          "Bismack Biyombo":
+          "Bismack Biyombo"=>
           {
             number: "0",
             shoe: "16",
@@ -97,7 +97,7 @@ def game_hash
             slam_dunks: "10"
           },
           
-          "DeSagna Diop":
+          "DeSagna Diop"=>
           {
             number: "2",
             shoe: "14",
@@ -109,7 +109,7 @@ def game_hash
             slam_dunks: "5"
           },
           
-          "Ben Gordon":
+          "Ben Gordon"=>
           {
             number: "8",
             shoe: "15",
@@ -121,7 +121,7 @@ def game_hash
             slam_dunks: "0"
           },
           
-          "Kemba Walker":
+          "Kemba Walker"=>
           {
             number: "33",
             shoe: "15",
@@ -132,19 +132,102 @@ def game_hash
             blocks: "5",
             slam_dunks: "12"
           }
-      ]
+      }
     }
   }
   game_hash
 end
 
+
 def num_points_scored(player_name)
+  points = nil
   game_hash.each do |location, team_data|
-    team_data[:players].each do |name|
-      binding.pry
+    team_data[:players].each do |player|
+      player[0] == player_name ? (points = player[1][:points]) : false
+      #binding.pry
     end
   end
+  points.to_i
 end
+
+def shoe_size(player_name)
+  shoes = nil
+  game_hash.each do |location, team_data|
+    team_data[:players].each do |player|
+      player[0] == player_name ? (shoes = player[1][:shoe]) : false
+    end
+  end
+  shoes.to_i
+end
+
+def team_colors(team_name)
+  colors = []
+  game_hash.each do |location, team_data|
+    team_data[:team_name] == team_name ? team_data[:colors].each {|color| colors.push(color)} : false
+  end
+  colors
+end
+
+def team_names
+  teams = []
+  game_hash.each do |location, team_data|
+    teams.push(team_data[:team_name])
+    #binding.pry  
+  end
+  teams
+end
+
+def player_numbers(team_name)
+  jerseys = []
+  game_hash.each do |location, team_data|
+    team_data[:team_name] == team_name ? team_data[:players].each { |player, stats| jerseys.push((stats[:number]).to_i)} : false
+      #binding.pry
+  end
+  jerseys
+end
+
+def player_stats(player_name)
+  stats = {}
+  game_hash.each do |location, team_data|
+    team_data[:players][player_name] ? stats = team_data[:players][player_name] : false
+    stats.each {|key, value| value.class == String ? stats[key] = value.to_i : false}
+  end
+  stats
+end
+
+def big_shoe_rebounds
+  max = 0
+  rebounds = 0
+  game_hash.each do |location, team_data|
+    team_data[:players].each do |player, stats|
+      stats.each do |key, value|
+        stats[:shoe].to_i > max ? (max = stats[:shoe].to_i; rebounds = stats[:rebounds].to_i) : false
+          #binding.pry
+      end
+    end
+  end
+  rebounds
+end
+
+def most_points_scored
+  max_points = 0
+  player_most_points = ""
+  game_hash.each do |location, team_data|
+    team_data[:players].each do |player, stats|
+      stats.each do |key, value|
+        stats[:points].to_i > max_points ? (max_points = stats[:points].to_i; player_most_points = player) : false
+        #binding.pry
+      end
+    end
+  end
+  player_most_points
+end
+
+def winning_team
+  game_hash.each do |location, team_data|
+  end
+end
+
 
 
 
@@ -171,15 +254,3 @@ def good_practices
     end
   end
 end
-
-
-
-
-
-
-
-
-
-
-
-
