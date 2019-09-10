@@ -223,16 +223,16 @@ def most_points_scored
   player_most_points
 end
 
+
 def winning_team
+  home_team = 0
+  away_team = 0
   game_hash.each do |location, team_data|
-    if location == :home
-      team_data[:players].each do |player, stats|
-        stats.each {|key, value| value.class == String ? stats[key] = value.to_i : false}
-          stats[:points].reduce(0) { |total, num| total + num }
-        binding.pry
-    end
+    team_data[:players].each do |player, stats|
+      location == :home ? home_team += stats[:points].to_i : away_team += stats[:points].to_i
     end
   end
+  home_team > away_team ? game_hash[:home][:team_name] : game_hash[:away][:team_name]
 end
 
 
